@@ -32,7 +32,11 @@ function configureDevPackages() {
 }
 //#endregion
 
+// See https://code.visualstudio.com/api/get-started/extension-anatomy#extension-entry-file
+
+// this method is called when your extension is activated
 export function activate(context: ExtensionContext, forceActivation?: boolean) {
+	console.log('🚀 Activating Extension: ', context);
 	return baseActivate({
 		context,
 		registerServices,
@@ -40,4 +44,9 @@ export function activate(context: ExtensionContext, forceActivation?: boolean) {
 		configureDevPackages,
 		forceActivation
 	});
+}
+
+// this method is called when your extension is deactivated
+export function deactivate() {
+	console.log('👋 Deactivating Extension.');
 }

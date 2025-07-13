@@ -246,6 +246,7 @@ export class ConversationFeature implements IExtensionContribution {
 				});
 			}),
 			vscode.commands.registerCommand('github.copilot.git.generateCommitMessage', async (rootUri: vscode.Uri | undefined, _: vscode.SourceControlInputBoxValueProviderContext[], cancellationToken: vscode.CancellationToken | undefined) => {
+				console.log('🚗 Start Generating Commit Message...');
 				const repository = this.gitCommitMessageService.getRepository(rootUri);
 				if (!repository) {
 					return;

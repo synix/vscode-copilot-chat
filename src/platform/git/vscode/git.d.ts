@@ -122,10 +122,10 @@ export interface RepositoryState {
 	readonly submodules: Submodule[];
 	readonly rebaseCommit: Commit | undefined;
 
-	readonly mergeChanges: Change[];
-	readonly indexChanges: Change[];
-	readonly workingTreeChanges: Change[];
-	readonly untrackedChanges: Change[];
+	readonly mergeChanges: Change[];	// 合并冲突
+	readonly indexChanges: Change[];	// git add 后的
+	readonly workingTreeChanges: Change[];	// working tree 里的变更
+	readonly untrackedChanges: Change[];	// 未跟踪的新增文件
 
 	readonly onDidChange: Event<void>;
 }

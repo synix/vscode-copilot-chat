@@ -41,6 +41,8 @@ export class GitCommitMessageGenerator {
 			2 /* MAX temperature - https://platform.openai.com/docs/api-reference/chat/create#chat/create-temperature */
 		);
 
+		console.log('🚄 generateGitCommitMessage prompt: ', JSON.stringify(prompt.messages));
+
 		const requestStartTime = Date.now();
 		this.interactionService.startInteraction();
 		const fetchResult = await endpoint

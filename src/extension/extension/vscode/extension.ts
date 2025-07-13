@@ -32,14 +32,21 @@ export interface IExtensionActivationConfiguration {
 
 export async function baseActivate(configuration: IExtensionActivationConfiguration) {
 	const context = configuration.context;
+
+	console.log('🔩 baseActivate: ', context.extensionMode, configuration.forceActivation);
+
 	if (context.extensionMode === ExtensionMode.Test && !configuration.forceActivation) {
 		// FIXME Running in tests, don't activate the extension
 		// Avoid bundling the extension code in the test bundle
 		return context;
 	}
 
+
 	// Check if the extension is running in a pre-release version of VS Code
 	const isStableVsCode = !(env.appName.includes('Insiders') || env.appName.includes('Exploration') || env.appName.includes('OSS'));
+
+	console.log('🔩 baseActivate, isStableVsCode: ', isStableVsCode, env.appName, context.extension.packageJSON.isPreRelease);
+
 	const showSwitchToReleaseViewCtxKey = 'github.copilot.interactiveSession.switchToReleaseChannel';
 	if (context.extension.packageJSON.isPreRelease && isStableVsCode) {
 		// Prevent activation of the extension if the user is using a pre-release version in stable VS Code

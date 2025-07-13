@@ -62,6 +62,7 @@ export class GitCommitMessageServiceImpl implements IGitCommitMessageService {
 	}
 
 	async generateCommitMessage(repository: Repository, cancellationToken: CancellationToken = CancellationToken.None): Promise<string | undefined> {
+		console.log('🚗 GitCommitMessageService -> generateCommitMessage: ', repository);
 		if (cancellationToken.isCancellationRequested) {
 			return undefined;
 		}
@@ -87,6 +88,8 @@ export class GitCommitMessageServiceImpl implements IGitCommitMessageService {
 
 			const changes = await this._gitDiffService.getChangeDiffs(repository, resources);
 
+			console.log('🚗 GitCommitMessageService -> getChangeDiffs: \n', changes.map(c => c.diff).join('\n\n'));
+
 			if (changes.length === 0) {
 				window.showInformationMessage(l10n.t('Cannot generate a commit message because the changes were excluded from the context due to content exclusion rules.'));
 				return undefined;
@@ -98,6 +101,8 @@ export class GitCommitMessageServiceImpl implements IGitCommitMessageService {
 
 			const gitCommitMessageGenerator = this._instantiationService.createInstance(GitCommitMessageGenerator);
 			const commitMessage = await gitCommitMessageGenerator.generateGitCommitMessage(changes, recentCommitMessages, attemptCount, cancellationToken);
+
+			console.log('🚗 GitCommitMessageService -> commitMessage: ', commitMessage);
 
 			// Save generated commit message
 			if (commitMessage && repository.state.HEAD && repository.state.HEAD.commit) {
